@@ -49,3 +49,7 @@ textarea,
 button {
   border-radius: 8px;
 }
+
+button {
+  cursor: pointer;
+}

@@ -14,13 +14,27 @@
   color: var(--gray-300);
 }
 
-.create-btn {
+.createBtn {
   background-color: var(--blue-dark);
   color: var(--gray-100);
   font-weight: 700;
   transition: background-color 0.15s;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.create-btn:hover {
+.createBtn span {
+  display: flex;
+  align-items: flex-end;
+}
+
+.createBtn svg {
+  margin-left: 0.5rem;
+  height: 1.4rem;
+}
+
+.createBtn:hover {
   background-color: var(--blue);
 }

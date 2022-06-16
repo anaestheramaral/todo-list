@@ -1,17 +1,18 @@
+import { PlusCircle } from "phosphor-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./Search.module.css";
 
-interface SearchProps {
+interface InputProps {
   addTodo: CallableFunction;
   onInputChange: (value: string) => void;
 }
 
-export const Search = ({ addTodo, onInputChange }: SearchProps) => {
+export const Input = ({ addTodo, onInputChange }: InputProps) => {
   const [text, setText] = useState("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
-    onInputChange(text);
+    onInputChange(event.target.value);
   }
 
   const submitForm = (event: FormEvent<HTMLFormElement>) => {
@@ -32,7 +33,14 @@ export const Search = ({ addTodo, onInputChange }: SearchProps) => {
         onChange={handleChange}
       />
 
-      <button className={styles['create-btn']} type="submit" >Criar</button>
+      <button className={styles.createBtn} type="submit" >
+        <span>
+          Criar
+
+          <PlusCircle size={16} weight="bold" />
+        </span>
+
+      </button>
     </form>
   )
 }

@@ -14,19 +14,37 @@
   border-radius: 8px;
   color: var(--gray-100);
   padding: 1rem;
+
+  display: grid;
+  grid-template-columns: 1fr 4rem;
+
+  transition: text-decoration-line 0.2s, color 0.2s;
+}
+
+.task+.task {
+  margin-top: 0.75rem;
+}
+
+.completedTask {
+  color: var(--gray-300);
+  text-decoration-line: line-through;
 }
 
 .task input[type="checkbox"] {
-  width: 17.45px;
+  min-width: 17.45px;
   height: 17.45px;
   border-radius: 50%;
-  vertical-align: middle;
+  vertical-align: text-top;
   border: 1px solid var(--blue);
   appearance: none;
   -webkit-appearance: none;
   outline: none;
   cursor: pointer;
   margin-right: 1rem;
+  margin-top: 0.2rem;
+  padding: 0.2rem 0;
+
+  transition: border 0.2s, accent-color 0.2s;
 }
 
 .task input[type="checkbox"]:hover {
@@ -38,19 +56,35 @@
   clip-path: circle(50% at 50% 50%);
   accent-color: var(--purple-dark);
   border: none;
+  transition: accent-color 0.2s;
 }
 
 .task input[type="checkbox"]:checked:hover {
   accent-color: var(--purple);
 }
 
-.task+.task {
-  margin-top: 0.75rem;
+.task label {
+  display: block;
 }
 
-.completedTask {
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+}
+
+.trashWrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.trashWrapper button {
   color: var(--gray-300);
-  text-decoration-line: line-through;
+  background-color: transparent;
+}
+
+.trashWrapper button:hover {
+  color: var(--danger);
 }
 
 .tasks {
@@ -68,7 +102,6 @@
   font-size: 0.75rem;
   padding: 0.125rem 0.5rem;
   font-weight: 700;
-
 }
 
 .tasks .created {
@@ -88,4 +121,8 @@
 .emptyListWrapper {
   text-align: center;
   padding: 4rem 0;
+}
+
+.emptyListWrapper svg {
+  color: var(--gray-400)
 }

@@ -1,8 +1,9 @@
+import { ClipboardText, Trash } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import styles from "./App.module.css";
 import { Header } from "./components/Header";
-import { Search } from "./components/Search";
+import { Input } from "./components/Search";
 import "./global.css";
 
 interface TodoItem {
@@ -12,20 +13,24 @@ interface TodoItem {
 }
 
 function App() {
-  const [completedTasks, setCompletedTasks] = useState(0);
+  const [completedTasksCount, setCompletedTasksCount] = useState(0);
   const [newTodo, setNewTodo] = useState({} as TodoItem);
   const [todoList, setTodoList] = useState([] as TodoItem[]);
 
   useEffect(() => {
-    const updatedCheckedItems = todoList.reduce((acc, curr) => {
+    const updatedCheckedItemsCount = todoList.reduce((acc, curr) => {
       if (curr.checked) {
         return acc + 1;
       }
+
       return acc;
     }, 0);
 
 
-    setCompletedTasks(updatedCheckedItems);
+    setCompletedTasksCount(updatedCheckedItemsCount);
+
+    const updatedListOrder = todoList.sort((x, y) => Number(x.checked) - Number(y.checked));;
+    setTodoList(updatedListOrder)
   }, [todoList])
 
 
@@ -59,12 +64,17 @@ function App() {
     setTodoList(updatedList);
   }
 
+  const handleDelete = (id: string) => {
+    const updatedList = todoList.filter(item => item.id !== id)
+    setTodoList(updatedList)
+  }
+
   return (
     <>
       <Header />
 
       <main className={styles.wrapper}>
-        <Search addTodo={addNewItem} onInputChange={onInputChange} />
+        <Input addTodo={addNewItem} onInputChange={onInputChange} />
 
         {/* List summary */}
         <header className={styles.tasks}>
@@ -84,7 +94,7 @@ function App() {
             </strong>
 
             <span>
-              {completedTasks} de {todoList.length}
+              {completedTasksCount} de {todoList.length}
             </span>
           </div>
         </header>
@@ -95,6 +105,8 @@ function App() {
             <div className={styles.divider}></div>
 
             <section className={styles.emptyListWrapper}>
+              <ClipboardText size={56} />
+
               <p>
                 <strong>Você ainda não tem tarefas cadastradas</strong>
               </p>
@@ -111,12 +123,20 @@ function App() {
               className={item.checked ? `${styles.task} ${styles.completedTask}` : styles.task}
               key={item.id}
             >
-              <input
-                type="checkbox"
-                id={item.id}
-                onChange={(e) => onCheckboxChange(e.target.checked, item.id)}
-              />
-              <label htmlFor={item.id}>{item.text}</label>
+              <div className={styles.checkbox}>
+                <input
+                  type="checkbox"
+                  id={item.id}
+                  onChange={(e) => onCheckboxChange(e.target.checked, item.id)}
+                />
+                <label htmlFor={item.id}>{item.text}</label>
+              </div>
+
+              <div className={styles.trashWrapper}>
+                <button onClick={() => handleDelete(item.id)}>
+                  <Trash size={16} weight="bold" />
+                </button>
+              </div>
             </div>
           )
         })}
