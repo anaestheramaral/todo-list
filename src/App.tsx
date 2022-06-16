@@ -29,14 +29,15 @@ function App() {
 
     setCompletedTasksCount(updatedCheckedItemsCount);
 
-    const updatedListOrder = todoList.sort((x, y) => Number(x.checked) - Number(y.checked));;
-    setTodoList(updatedListOrder)
+    const updatedListOrder = todoList.sort((x, y) => Number(x.checked) - Number(y.checked));
+    setTodoList(updatedListOrder);
   }, [todoList])
 
 
   const addNewItem = () => {
-    setTodoList([...todoList, newTodo])
-    setNewTodo({} as TodoItem)
+    setTodoList([newTodo, ...todoList]);
+
+    setNewTodo({} as TodoItem);
   }
 
   const onInputChange = (newItem: string) => {
